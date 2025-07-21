@@ -1,0 +1,6 @@
+Flask
+tensorflow==2.12.0
+transformers
+numpy
+pandas
+scikit-learn

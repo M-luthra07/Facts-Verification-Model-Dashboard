@@ -9,7 +9,8 @@ app = Flask(__name__)
 
 # Load tokenizer and model
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
-model = tf.keras.models.load_model('model/bert_lstm_model.keras')
+MODEL_PATH = os.getenv('MODEL_PATH', 'model/bert_lstm_model.keras')
+model = tf.keras.models.load_model(MODEL_PATH)
 
 # Clean text
 def clean_text(text):

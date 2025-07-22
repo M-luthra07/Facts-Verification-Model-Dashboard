@@ -6,6 +6,18 @@ import os
 from transformers import BertTokenizer
 
 app = Flask(__name__)
+@register_keras_serializable()
+class BertLayer(tf.keras.layers.Layer):
+    def __init__(self, bert_model_name='bert-base-uncased', **kwargs):
+        super(BertLayer, self).__init__(**kwargs)
+        self.bert = TFAutoModel.from_pretrained(bert_model_name)
+        self.bert.trainable = True
+
+    def call(self, inputs, **kwargs):
+        input_ids, attention_mask = inputs
+        output = self.bert(input_ids=input_ids, attention_mask=attention_mask)
+        return output.last_hidden_state
+
 
 # Load tokenizer and model
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
